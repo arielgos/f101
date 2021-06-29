@@ -9,7 +9,21 @@ const firebaseConfig = {
   };
 firebase.initializeApp(firebaseConfig);
 
+var provider = new firebase.auth.GoogleAuthProvider();
 
 $(document).ready(function(){
     console.log("App Start");
+    $("html").click(function(){
+        console.log("Body click");
+        firebase.auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          var credential = result.credential;
+          var token = credential.accessToken;
+          var user = result.user;
+          console.log(user.displayName);
+        }).catch((error) => {
+          console.error(error);
+        });
+    });
 });
