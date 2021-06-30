@@ -1,4 +1,84 @@
 html,
 body{
     background-color: #CCC;
+    margin:0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background-color: #333;
+    z-index: 9999;
+}
+
+nav a.logo{
+    position: relative;
+    display: block;
+    float: left;
+    width:20%;
+    padding:20px;
+    color:#CCC;
+    font-size: 1.2em;
+}
+
+nav .menu{
+    position: relative;
+    display: block;
+    float: right;
+    width:calc(80% - 40px);
+    
+}
+
+nav .menu ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    position: relative;
+    display: block;
+    float: right;
+}
+
+nav .menu ul li{
+    position: relative;
+    display: block;
+    float: left;
+}
+
+nav .menu ul li a{
+    position: relative;
+    display: block;
+    float: left;
+    padding:20px 25px;
+    color:#FFF;
+    font-size: 1.2em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav .menu ul li a.name img{
+    width:32px;
+}
+
+nav .menu ul li a.name span{
+    padding-top:-14px;
+}
+
+.window{
+    position: absolute;
+    width:70%;
+    background: red;
+    height: 100vh;
+    left:0;
+}
+
+.chat{
+    position: absolute;
+    width:30%;
+    background: yellow;
+    height: 100vh;
+    right: 0;
 }
