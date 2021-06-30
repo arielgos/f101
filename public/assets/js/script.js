@@ -30,7 +30,6 @@ $(document).ready(function () {
       .signInWithPopup(provider)
       .then((result) => {
         firebaseUser = result.user;
-        
       }).catch((error) => {
         console.error(error);
       });
@@ -38,22 +37,23 @@ $(document).ready(function () {
 
   $(".menu .logout").click(function () {
     firebase.auth().signOut().then(() => {
-      // Sign-out successful.
+      firebaseUser = null;
     }).catch((error) => {
       console.error(error);
     });
   });
-
 });
 
 function loadInterface() {
-  if (firebaseUser != null) {
+  console.log("loading interface...");
+  if (firebaseUser !== null) {
     $(".menu .name img").attr({ src: firebaseUser.photoURL });
     $(".menu .name span").html(firebaseUser.displayName);
     $(".menu .logout").show();
     $(".menu .login").hide();
   } else {
-    $(".menu .name").html("");
+    $(".menu .name img").attr({ src: "" });
+    $(".menu .name span").html("");
     $(".menu .logout").hide();
     $(".menu .login").show();
   }
