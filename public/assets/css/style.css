@@ -77,8 +77,37 @@ nav .menu ul li a.name span{
 
 .chat{
     position: absolute;
-    width:30%;
-    background: yellow;
-    height: 100vh;
+    width:calc(30% - 35px);
     right: 0;
+    top:70px;
+    bottom:10px;
+    margin:10px;
+    padding:5px;
+    border-radius: 3px;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.75);
+}
+
+.chat .messages{
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    height:60vh;
+    background-color: #DDD;
+}
+
+.chat textarea{
+    width: calc(100% - 10px);
+    height: 64px;
+}
+
+.chat button{
+    border-radius: 10px;
+    background-color: #333;
+    color:#FFF;
+    border:0px;
+    float:right;
+    padding:10px 35px;
 }
