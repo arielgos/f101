@@ -127,10 +127,12 @@ nav .menu ul li a.name span{
     position: relative;
     display: block;
     padding-top: 75px;
+    padding-bottom:15px;
     float: left;
     width: 100%;
-    height:calc(100vh - 180px);
+    height:calc(100vh - 200px);
     background-color: #666;
+    overflow: auto;
 }
 
 .chat .messages .message{

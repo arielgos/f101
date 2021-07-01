@@ -137,6 +137,7 @@ function createMessage(data) {
     div.attr({ class: "message right" });
   }
   $(".chat .messages").append(div);
+  $(".chat .messages").scrollTop($(".chat .messages .message").length * 150);
 }
 
 function createUser(data) {
