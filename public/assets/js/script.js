@@ -59,12 +59,44 @@ $(document).ready(function () {
     });
   });
 
+  //envio de mensaje
+  $("#send").click(function () {
+    var message = $("#message").val();
+    if (message.length > 0) {
+      console.log(message);
+      var date = new Date();
+      //envio del mensaje
+      firestore.collection("messages").add({
+        id: firebaseUser.uid,
+        user: firebaseUser.displayName,
+        message: message,
+        date: date.getTime()
+      }).then(function (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+      }).catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
+      $("#message").val("");
+    }
+  });
+
   //listener de usuarios
   firestore.collection("users")
     .onSnapshot(function (querySnapshot) {
       querySnapshot.docChanges().forEach(function (change) {
         if (change.type === "added") {
           createUser(change.doc.data());
+        }
+      });
+    });
+
+  //listener de mensajes
+  firestore.collection("messages")
+    .orderBy("date")
+    .onSnapshot(function (querySnapshot) {
+      querySnapshot.docChanges().forEach(function (change) {
+        if (change.type === "added") {
+          createMessage(change.doc.data());
         }
       });
     });
@@ -91,6 +123,20 @@ function loadInterface() {
     $(".chat").hide();
     $(".users").css("width", "100%");
   }
+}
+
+function createMessage(data) {
+  var div = $("<div>").attr({ class: "message" });
+  var message = $("<div>").attr({ class: "text" });
+  var user = $("<div>").attr({ class: "user" });
+  message.append(data.message);
+  user.append(data.user);
+  div.append(message);
+  div.append(user);
+  if (data.id == firebaseUser.uid) {
+    div.attr({ class: "message right" });
+  }
+  $(".chat .messages").append(div);
 }
 
 function createUser(data) {

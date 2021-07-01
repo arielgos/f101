@@ -81,7 +81,7 @@ nav .menu ul li a.name span{
     background: #999;
     height: 100vh;
     left:0;
-    overflow: none;
+    overflow: hidden;
 }
 
 .users .user{
@@ -126,11 +126,34 @@ nav .menu ul li a.name span{
 .chat .messages{
     position: relative;
     display: block;
-    padding-top: 70px;
+    padding-top: 75px;
     float: left;
     width: 100%;
     height:calc(100vh - 180px);
     background-color: #666;
+}
+
+.chat .messages .message{
+    position: relative;
+    display: block;
+    float: left;
+    margin:5px;
+    background-color: #333;
+    color:#FFF;
+    clear:both;
+    font-size: 24px;
+    padding:5px;
+    border-radius: 5px;
+}
+
+.chat .messages .message.right{
+    float: right;
+    text-align: right;
+}
+
+.chat .messages .message .user{
+    font-size: 12px;
+    color:#CCC;
 }
 
 .chat .controls{
