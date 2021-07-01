@@ -59,13 +59,13 @@ $(document).ready(function () {
     });
   });
 
-  //envio de mensaje
+  //envio de mensajes
   $("#send").click(function () {
     var message = $("#message").val();
     if (message.length > 0) {
       console.log(message);
       var date = new Date();
-      //envio del mensaje
+      //registro de mensaje
       firestore.collection("messages").add({
         id: firebaseUser.uid,
         user: firebaseUser.displayName,
@@ -77,6 +77,14 @@ $(document).ready(function () {
         console.error("Error adding document: ", error);
       });
       $("#message").val("");
+    }
+  });
+
+  $("#message").keypress(function (e) {
+    var key = e.keyCode ? e.keyCode : e.which;
+    if (key == 13) {
+      e.preventDefault();
+      $("#send").click();
     }
   });
 
