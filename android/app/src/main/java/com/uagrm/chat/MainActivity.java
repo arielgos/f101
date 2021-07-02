@@ -3,6 +3,7 @@ package com.uagrm.chat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
         if (user == null) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.client_id))
+                    .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()
                     .build();
             googleSignInClient = GoogleSignIn.getClient(this, gso);
             Intent signInIntent = googleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
+        } else {
+            loadInterface();
         }
     }
 
@@ -56,10 +59,9 @@ public class MainActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(tag, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                Log.w(tag, "Google sign in failed", e);
+                Log.e(tag, e.getMessage(), e);
             }
         }
     }
@@ -70,15 +72,17 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
                         Log.d(tag, "signInWithCredential:success");
                         user = firebaseAuth.getCurrentUser();
-                        Log.d(tag, user.toString());
+                        loadInterface();
                     } else {
-                        // If sign in fails, display a message to the user.
                         Log.w(tag, "signInWithCredential:failure", task.getException());
                     }
                 });
+    }
+
+    private void loadInterface() {
+        Log.d(tag, user.getDisplayName());
     }
 
 }
