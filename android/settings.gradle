@@ -1,0 +1,2 @@
+rootProject.name = "uagrm"
+include ':app'
