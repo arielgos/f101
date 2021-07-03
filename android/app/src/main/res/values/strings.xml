@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">uagrm</string>
+    <string name="send">Enviar</string>
 </resources>
