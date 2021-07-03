@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private GoogleSignInClient googleSignInClient;
     private final int RC_SIGN_IN = 100;
-    private User user;
+    private User user = null;
     private final List<Message> messages = new ArrayList();
 
     @BindView(R.id.username)
@@ -86,19 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 messageToSend.setDate(new Date().getTime());
                 fireStore.collection("messages").add(messageToSend);
                 message.setText("");
-            }
-        });
-
-        CollectionReference reference = fireStore.collection("messages");
-        reference.orderBy("date").addSnapshotListener((snapshot, error) -> {
-            if (snapshot != null) {
-                for (DocumentChange document : snapshot.getDocumentChanges()) {
-                    if (document.getType().equals(DocumentChange.Type.ADDED)) {
-                        messages.add(document.getDocument().toObject(Message.class));
-                        Log.d(tag, messages.toString());
-                        ((MessageAdapter) list.getAdapter()).notifyDataSetChanged();
-                    }
-                }
             }
         });
 
@@ -161,6 +148,19 @@ public class MainActivity extends AppCompatActivity {
                 .document(user.getId())
                 .set(user);
         username.setText(user.getUser());
+
+        CollectionReference reference = fireStore.collection("messages");
+        reference.orderBy("date").addSnapshotListener((snapshot, error) -> {
+            if (snapshot != null && user != null) {
+                for (DocumentChange document : snapshot.getDocumentChanges()) {
+                    if (document.getType().equals(DocumentChange.Type.ADDED)) {
+                        messages.add(document.getDocument().toObject(Message.class));
+                        Log.d(tag, messages.toString());
+                        ((MessageAdapter) list.getAdapter()).notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 
     public class MessageAdapter extends ArrayAdapter<Message> {
